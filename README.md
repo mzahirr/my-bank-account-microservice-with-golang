@@ -12,7 +12,7 @@ Ensure that you have Docker installed on your computer. You can download Docker 
 
 Clone this repository to your computer:
 
-git clone https://github.com/yourusername/my-bank-app.git
+git clone https://github.com/mzahirr/my-bank-account-microservice-with-golang.git
 
 ## Starting the Project with Docker Compose
 
