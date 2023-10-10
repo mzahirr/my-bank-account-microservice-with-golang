@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	http.HandleFunc("/account/balance", handlers.ProxyToAccountService)
+	http.HandleFunc("/account", handlers.ProxyToAccountService)
 	http.HandleFunc("/transaction/transfer", handlers.ProxyToTransactionService)
 
 	port := 8080

@@ -1,8 +1,12 @@
 # Resmi Go görüntüsünü temel alın
-FROM golang:1.17
+FROM golang:1.21
 
 # Çalışma dizinini belirle
 WORKDIR /app
+
+# Kaynak kodları ve go mod dosyasını kopyala
+COPY go.mod go.sum ./
+RUN go mod download
 
 # Kaynak kodları kopyala
 COPY . .
