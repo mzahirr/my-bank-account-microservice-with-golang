@@ -11,8 +11,6 @@ RUN go mod download
 # Kaynak kodları kopyala
 COPY . .
 
-# Uygulamayı derle
 RUN go build -o account-service
 
-# Uygulamayı çalıştır
-CMD ["./account-service"]
+ENTRYPOINT ["./account-service"]

@@ -14,15 +14,10 @@ type Account struct {
 }
 
 // CreateAccount, yeni bir hesap oluşturur
-func CreateAccount(firstName string, lastName string, Balance float64) *Account {
-	db, err := gorm.Open(sqlite.Open("db.sqlite"), &gorm.Config{})
+func CreateAccount(firstName string, lastName string, Balance float64) (*Account, error) {
+	db, err := gorm.Open(sqlite.Open("db1.sqlite"), &gorm.Config{})
 	if err != nil {
-		return nil
-	}
-
-	// Tabloları oluşturun.
-	if err := db.AutoMigrate(&Account{}); err != nil {
-		return nil
+		return nil, err
 	}
 
 	// Yeni bir hesap nesnesi oluşturun.
@@ -34,8 +29,8 @@ func CreateAccount(firstName string, lastName string, Balance float64) *Account 
 
 	// Hesabı veritabanına kaydedin.
 	if err := db.Create(&account).Error; err != nil {
-		return nil
+		return nil, err
 	}
 
-	return &account
+	return &account, nil
 }

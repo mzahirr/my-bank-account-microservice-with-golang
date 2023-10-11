@@ -10,11 +10,13 @@ services:
   account-service:
     build:
       context: ./account-service
+      dockerfile: Dockerfile
     ports:
       - "8081:8081"
+    volumes:
+      - ./account-service:/app
     networks:
       - bank-network
-
   transaction-service:
     build:
       context: ./transaction-service

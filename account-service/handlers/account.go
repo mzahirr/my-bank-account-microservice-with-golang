@@ -23,11 +23,16 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Yeni bir kullanıcı oluşturun.
-	if err := models.CreateAccount(user.FirstName, user.LastName, user.Balance); err != nil {
-		http.Error(w, "test", http.StatusInternalServerError)
-		return
+	if newAccount, err := models.CreateAccount(user.FirstName, user.LastName, user.Balance); err != nil {
+		if err != nil {
+			fmt.Println("Hesap oluşturulamadı:", err)
+			http.Error(w, "Hesap oluşturulamadı:", http.StatusInternalServerError)
+			return
+		} else {
+			fmt.Println(newAccount)
+		}
 	}
 
-	// Kullanıcıyı yanıtlayın.
-	fmt.Fprintf(w, "Kullanıcı oluşturuldu: %+v", user)
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(user)
 }
