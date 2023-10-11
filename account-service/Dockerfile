@@ -6,11 +6,12 @@ WORKDIR /app
 
 # Kaynak kodları ve go mod dosyasını kopyala
 COPY go.mod go.sum ./
-RUN go mod download
+RUN go mod download cmd/account-service/main.go
 
 # Kaynak kodları kopyala
 COPY . .
 
 RUN go build -o account-service
 
-ENTRYPOINT ["./account-service"]
+RUN chmod +x account-service
+CMD ["./account-service"]
