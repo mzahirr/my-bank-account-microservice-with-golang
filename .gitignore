@@ -1,6 +1,9 @@
 *.iml
 *.ipr
 *.iws
+*.sum
+.DS_Store
+*.sqlite
 .idea/
 /build/
 /dist/
