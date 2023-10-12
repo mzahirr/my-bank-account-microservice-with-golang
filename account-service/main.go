@@ -13,16 +13,9 @@ import (
 
 func main() {
 
-	db, err := gorm.Open(sqlite.Open("db1.sqlite"), &gorm.Config{})
-	if err != nil {
-		panic("Veritabanına bağlanılamadı!")
-	}
+	db := openDbConnection()
 
-	// Account modeli için tabloyu oluştur veya güncelle
-	err2 := db.AutoMigrate(models.Account{})
-	if err2 != nil {
-		panic(err2)
-	}
+	createDbModels(db)
 
 	port := 8081
 	fmt.Printf("Account Service listening on port %d...\n", port)
@@ -30,10 +23,26 @@ func main() {
 	handleRequests(port)
 }
 
+func openDbConnection() *gorm.DB {
+	db, err := gorm.Open(sqlite.Open("db1.sqlite"), &gorm.Config{})
+	if err != nil {
+		panic("Failed to connect database !!!")
+	}
+	return db
+}
+
+func createDbModels(db *gorm.DB) {
+	err := db.AutoMigrate(models.Account{})
+	if err != nil {
+		panic("Failed to create database models !!!")
+	}
+}
+
 func handleRequests(port int) {
 	myRouter := mux.NewRouter().StrictSlash(true)
 
 	myRouter.HandleFunc("/account", handlers.CreateUser).Methods("POST")
+	myRouter.HandleFunc("/account/{id}", handlers.GetUser).Methods("GET")
 	myRouter.HandleFunc("/account/balance", handlers.GetBalance).Methods("GET")
 	myRouter.HandleFunc("/account/{id}/deposit", handlers.TransactionMoney).Methods("PATCH")
 
