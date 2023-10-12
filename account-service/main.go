@@ -42,6 +42,7 @@ func handleRequests(port int) {
 	myRouter := mux.NewRouter().StrictSlash(true)
 
 	myRouter.HandleFunc("/account", handlers.CreateUser).Methods("POST")
+	myRouter.HandleFunc("/account/{id}", handlers.GetUser).Methods("GET")
 	myRouter.HandleFunc("/account/balance", handlers.GetBalance).Methods("GET")
 	myRouter.HandleFunc("/account/{id}/deposit", handlers.TransactionMoney).Methods("PATCH")
 
